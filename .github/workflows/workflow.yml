@@ -15,14 +15,14 @@ jobs:
    # This action sets up the JFrog CLI with the Artifactory URL and access token     
    - uses: jfrog/setup-jfrog-cli@v3
      env:
-       JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+       JF_URL: ${{ secrets.JF_URL }}
        JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
 
-   # This command adds a new server configuration to the JFrog CLI   
+   # This command adds a new server configuration to the JFrog CLI  
    - run: |
        export SERVER_ID="cloud"
-       jf c add $SERVER_ID --url=https://elinaf.jfrog.io/artifactory --user noffarl --password cmVmdGtuOjAxOjE3MzgzMzM0NTM6TXQ1MmFJZ055bFdOZ0pTc3pmMTVEZFZ6MXdZ --interactive=false
+       jf c add $SERVER_ID --url=https://elinaf.jfrog.io/artifactory --user noffarl --password cmVmdGtuOjAxOjAwMDAwMDAwMDA6bms4eDNJUEZXMENXd0tzelZ0TklCMEJTb2lB --interactive=false
 
 
    # This action creates a new test file and uploads it to Artifactory   
