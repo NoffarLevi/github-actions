@@ -12,7 +12,7 @@ jobs:
      uses: actions/checkout@v2
 
 
-   # This action sets up the JFrog CLI with the Artifactory URL and access token     
+   # This action sets up the JFrog CLI with the Artifactory URL and access token  
    - uses: jfrog/setup-jfrog-cli@v3
      env:
        JF_URL: ${{ secrets.JF_URL }}
