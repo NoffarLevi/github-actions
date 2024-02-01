@@ -22,7 +22,7 @@ jobs:
    # This command adds a new server configuration to the JFrog CLI   
    - run: |
        export SERVER_ID="test"
-       jf c add $SERVER_ID --url=$URL --access-token=$ACCESS_TOKEN --interactive=false
+       jf c add $SERVER_ID --url=https://elinaf.jfrog.io --access-token=$ACCESS_TOKEN --interactive=false
 
 
    # This action creates a new test file and uploads it to Artifactory   
@@ -36,7 +36,7 @@ jobs:
 
        export PATH_TO_DIRECTORY="name/version/dates"
       
-       jf rt upload "test.txt" example-repo-local/$PATH_TO_DIRECTORY --build-name $BUILD_NAME --build-number $BUILD_NUMBER --module $BUILD_MODULE
+       jf rt upload "test.txt" noffarl-docker-local/$PATH_TO_DIRECTORY --build-name $BUILD_NAME --build-number $BUILD_NUMBER --module $BUILD_MODULE
 
 
    # This action publishes the build information to Artifactory and deletes older builds
