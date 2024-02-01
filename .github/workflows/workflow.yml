@@ -16,13 +16,13 @@ jobs:
    - uses: jfrog/setup-jfrog-cli@v3
      env:
        JF_URL: ${{ secrets.ARTIFACTORY_URL }}
-       JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }}
+       JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
 
    # This command adds a new server configuration to the JFrog CLI   
    - run: |
-       export SERVER_ID="test"
-       jf c add $SERVER_ID --url=https://elinaf.jfrog.io --access-token=$ACCESS_TOKEN --interactive=false
+       export SERVER_ID="cloud"
+       jf c add $SERVER_ID --url=https://elinaf.jfrog.io/artifactory --access-token=$JF_ACCESS_TOKEN --interactive=false
 
 
    # This action creates a new test file and uploads it to Artifactory   
@@ -36,7 +36,7 @@ jobs:
 
        export PATH_TO_DIRECTORY="name/version/dates"
       
-       jf rt upload "test.txt" noffarl-docker-local/$PATH_TO_DIRECTORY --build-name $BUILD_NAME --build-number $BUILD_NUMBER --module $BUILD_MODULE
+       jf rt upload "test.txt" noffarl-docker-local --build-name $BUILD_NAME --build-number $BUILD_NUMBER --module $BUILD_MODULE
 
 
    # This action publishes the build information to Artifactory and deletes older builds
