@@ -18,7 +18,7 @@ jobs:
   
         username: noffarl
         password: Password1!
-        registry: hts1-noffarl-docker.jfrog.io
+        registry: mill.jfrog.info:13070/test-docker
   
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v3
