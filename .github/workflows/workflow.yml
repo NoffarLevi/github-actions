@@ -1,47 +1,71 @@
-name: Push Build to Artifactory
+name: Docker Build Test Using Action
 
-on: [push]
+on:
+
+  workflow_dispatch:
 
 jobs:
- build:
-   runs-on: ubuntu-latest
-  
-   steps:
-   # This action checks out the code from the repository blahh
-   - name: Checkout Code
-     uses: actions/checkout@v2
+  something:
+    steps:
 
+    - uses: actions/checkout@v4
 
-   # This action sets up the JFrog CLI with the Artifactory URL and access token  
-   - uses: jfrog/setup-jfrog-cli@v3
-     env:
-       JF_URL: ${{ secrets.JF_URL }}
-       JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+    - name: Login to Docker
 
+      uses: docker/login-action@v3
 
-   # This command adds a new server configuration to the JFrog CLI  
-   - run: |
-       export SERVER_ID="cloud"
-       jf c add $SERVER_ID --url=https://elinaf.jfrog.io --user noffarl --password Password1! --interactive=false
+      with:
 
+        username: noffarl
 
-   # This action creates a new test file and uploads it to Artifactory   
-   - name: Push Build to Artifactory
-     run: |
-       echo "test file " > test.txt
-       export BUILD_NAME="my-build"
-       export BUILD_MODULE="my-module"
-       export BUILD_NUMBER="1"
+        password: Password1!
 
+        registry: hts1-noffarl-docker.jfrog.io
 
-       export PATH_TO_DIRECTORY="name/version/dates"
-      
-       jf rt upload "test.txt" noffarl-docker-local --build-name $BUILD_NAME --build-number $BUILD_NUMBER --module $BUILD_MODULE
+    - name: Setup Docker Buildx
 
+      uses: docker/setup-buildx-action@v3
 
-   # This action publishes the build information to Artifactory and deletes older builds
-   - name: Build to Artifactory
-     run: |
-       jf rt build-publish $BUILD_NAME $BUILD_NUMBER
-     
-       jf rt bdi c --max-builds=1
+    - name: Format Build Tag
+
+      id: format-build-tag
+
+      shell: bash
+
+      run: echo "build-tag=b${GITHUB_RUN_NUMBER}-${GITHUB_SHA::8}" >> "$GITHUB_OUTPUT"
+
+    - name: Set Docker metadata
+
+      id: meta
+
+      uses: docker/metadata-action@v5
+
+      with:
+
+        images: my-ubuntu-image:jammy
+
+        tags: |
+
+          type=sha,format=long,prefix=
+
+          type=raw,value=${{ steps.format-build-tag.outputs.build-tag }}
+
+        labels: |
+
+          github.actions.runner.run.id=${{ github.run_id }}
+
+    - name: Build and push
+
+      uses: docker/build-push-action@v5
+
+      with:
+
+        context: .
+
+        file: Dockerfile
+
+        tags: ${{ steps.meta.outputs.tags }}
+
+        labels: ${{ steps.meta.outputs.labels }}
+
+        push: true
