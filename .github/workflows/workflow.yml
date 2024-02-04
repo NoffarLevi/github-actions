@@ -19,6 +19,7 @@ jobs:
         username: noffarl
         password: Password1!
         registry: n-docker.davidfa.com
+        args: "--insecure-registry n-docker.davidfa.com"
   
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v3
