@@ -17,10 +17,8 @@ jobs:
       with:
   
         username: noffarl
-        password: cmVmdGtuOjAxOjE3Mzg1ODI3MTk6NkFYT0xxM2RwY0lFb1JtVUd6dW5wYXphYU1p
+        password: Password1!
         registry: hts1-noffarl-docker.jfrog.io
-    - name : Check Docker Login Error
-      run: echo "Docker login status:${{ steps.Login-to-Docker.outcome }}"
   
     - name: Setup Docker Buildx
       uses: docker/setup-buildx-action@v3
