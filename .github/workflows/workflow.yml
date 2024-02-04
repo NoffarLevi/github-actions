@@ -16,8 +16,8 @@ jobs:
   
       with:
   
-        username: noffarl
-        password: Password1!
+        username: admin
+        password: Password1*
         registry: mill.jfrog.info:13070/test-docker
   
     - name: Setup Docker Buildx
