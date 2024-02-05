@@ -19,8 +19,7 @@ jobs:
      with:
        username: ${{ secrets.JF_USER }}
        password: ${{ secrets.JF_PASSWORD }}
-       run: echo "user ${{ secrets.JF_USER }} and password ${{ secrets.JF_PASSWORD }}"
-       registry: hts1-noffarl-docker.jfrog.io
+       registry: elinaf.jfrog.io
        
    - name: Setup Docker Buildx
 
