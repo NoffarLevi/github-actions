@@ -40,7 +40,7 @@ jobs:
 
      with:
 
-       images: my-ubuntu-image:jammy
+       images: noffarl-docker/
 
        tags: |
 
