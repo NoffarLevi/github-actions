@@ -40,7 +40,7 @@ jobs:
 
      with:
 
-       images: elinaf.jfrog.io/noffarl-docker/
+       images: elinaf.jfrog.io/noffarl-docker/test
 
        tags: |
 
